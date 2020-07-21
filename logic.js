@@ -42,8 +42,12 @@ function generateCompMove(){
 
 }
 
+document.getElementsByClassName(".buttion").addEventListener("click",playerInput,false);
 
-function 
+function playerInput() {
+    this.data-
+
+}
 
 function showPattern(){
 
