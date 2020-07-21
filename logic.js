@@ -30,34 +30,65 @@ display computer array(animation controller JS)
 
 var gameInfo = {
     gameCount: 0, 
-    timer: 300,
-
+    maxTimer: 300,
+    currentTimer=300,
 }
 
 let userList = [];
 
 let compList = [];
 
-function generateCompMove(){
-
+function setup() {
+    gameInfo.startTimer=Date.now();
 }
 
 document.getElementsByClassName(".buttion").addEventListener("click",playerInput,false);
 
 function playerInput() {
-    this.data-
+   var input = this.data-value;
+   console.log(input);
 
+    if (comparePattern() == true) {
+        if(gameCount>=compList.length-1) {
+            //this is for when the player passes a round
+            pushToCompList();
+            resetPlayer();
+            showPattern();
+        }
+        //this is when the player passes the check
+        gameInfo.gameCount+=1;
+    } else {
+        resetGame();
+    }
+
+}
+function comparePattern() {
+    if(userList[gameInfo.gameCount] === compList[gameInfo.gameCount]) {
+        return true;
+    }
+    return false;
 }
 
 function showPattern(){
 
 }
-
-setInterval(resetGame, timer)
+setInterval(resetGame, 1000);
+function checkState() {
+    currentTimer-=1;
+    if(currentTimer<=0) {
+        resetGame();
+    }
+}
+function resetPlayer() {
+    gameInfo.gameCount=0;
+    for (let index = 0; index < compList.length; index++) {
+        userList[index]=[];
+    }
+}
 
 function resetGame(){
     gameInfo.gameCount = 0;
-    gameInfo.timer = 300;
+    gameInfo.currentTimer = gameInfo.maxTimer;
     userList = [];
     compList = [];
 
