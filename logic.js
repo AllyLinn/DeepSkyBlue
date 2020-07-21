@@ -30,8 +30,8 @@ display computer array(animation controller JS)
 
 var gameInfo = {
     gameCount: 0, 
-    maxTimer: 300,
-    currentTimer=300,
+    maxTimer: 3000,
+    currentTimer=3000,
 }
 
 let userList = [];
@@ -55,9 +55,11 @@ function playerInput() {
             resetPlayer();
             showPattern();
             console.log(playerList + "player list");
+            gameInfo.currentTimer = gameInfo.maxTimer();
         }
         //this is when the player passes the check
         gameInfo.gameCount+=1;
+        gameInfo.currentTimer = gameInfo.maxTimer();
         console.log(playerList + "player list");
     } else {
         resetGame();
@@ -76,6 +78,7 @@ function showPattern(){
 }
 setInterval(checkState, 1000);
 function checkState() {
+    console.log("tests")
     currentTimer-=1;
     if(currentTimer<=0) {
         resetGame();
