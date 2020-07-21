@@ -60,19 +60,16 @@ function playerInput() {
    var input =parseInt($(this).data("value"));
    userList[gameInfo.gameCount]=input;
     if (comparePattern() == true) {
-        console.log(gameInfo.gameCount)
         if(gameInfo.gameCount==compList.length-1) {
             console.log("player passed the round")
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
-            showPattern();
             console.log(userList + "player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
         } else {
         //this is when the player passes the check
         gameInfo.currentTimer = gameInfo.maxTimer;
-        console.log(compList.length - 1);
         console.log(userList + "player list");
         gameInfo.gameCount+=1;
         }
@@ -82,7 +79,6 @@ function playerInput() {
 
 }
 function comparePattern() {
-    console.log(gameInfo.gameCount + "game count");
     if(userList[gameInfo.gameCount] == compList[gameInfo.gameCount]) {
         return true;
     }
@@ -94,7 +90,6 @@ function showPattern(){
 }
 //setInterval(checkState, 1000);
 function checkState() {
-    console.log("tests")
     currentTimer-=1;
     if(currentTimer<=0) {
         resetGame();
@@ -102,7 +97,6 @@ function checkState() {
 }
 function resetPlayer() {
     gameInfo.gameCount=0;
-    console.log(gameInfo.gameCount);
     for (let index = 0; index < compList.length; index++) {
         userList[index]=[];
     }
@@ -114,6 +108,7 @@ function resetGame(){
     gameInfo.currentTimer = gameInfo.maxTimer;
     userList = [];
     compList = [];
+    pushToCompList();
 
 }
 
