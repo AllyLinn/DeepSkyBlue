@@ -1,34 +1,45 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <title>Simon!</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link href="stylesheet.css" type="text/css" rel="stylesheet">
         <script src="logic.js" defer></script>
     </head>
     <body>
         <!--title-->
-<h1 style="color:deepskyblue"> Lets Play Simon! </h1>
-      
-      
+       <div class="headers">
+        <img src="https://c190stash.imfast.io/letsplaysimone.png">
+        <h2>The computer will show you a pattern, repeat it before the timer runs out! If you get it right, the pattern will get longer and longer</h2>
+       <br>
+        <h3>--timer--</h3>
+    </div>
         <!--buttons-->
-        <div class="container">
+        <div class="buttons container">
             <div class="row">
-              <div class="col-3 buttion" data-value="0"></div>
-              <div class="col-3 buttion" data-value="1">col</div>
-              <div class="col-3 buttion" data-value="2">col</div>
               <div class="col-3"></div>
-            </div> 
-              <div class="row"> 
-              <div class="col-3 buttion" data-value="3"></div>
-              <div class="col-3 buttion" data-value="4">col</div>
-              <div class="col-3 buttion" data-value="5">col</div>
-              <div class="col-3 buttion"></div>
+              <div class="col-3">
+                  <img class="leftcolumn toprow individbutton" src="https://c190stash.imfast.io/red1.png">
+                </div>
+              <div class="col-3">
+                  <img class="rightcolumn toprow individbutton" src="https://c190stash.imfast.io/yellow1.png">
             </div>
-          </div>    
+              <div class="col-3"></div>
+            </div>
+              <div class="row">
+              <div class="col-3"></div>
+              <div class="col-3">
+                <img class="leftcolumn bottomrow individbutton" src="https://c190stash.imfast.io/green1.png">
+              </div>
+              <div class="col-3">
+                  <img class="rightcolumn bottomrow individbutton"src="https://c190stash.imfast.io/blue1.png">
+                </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
 </div>
-
-    </body>
+<!--timer-->
+</body>
 </html>
-
