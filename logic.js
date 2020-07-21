@@ -30,9 +30,8 @@ display computer array(animation controller JS)
 
 var gameInfo = {
     gameCount: 0, 
-
-    maxTimer: 300,
-    currentTimer: 300,
+    maxTimer: 3000,
+    currentTimer: 3000,
     sound1: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
     sound2: "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
     sound3: "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
