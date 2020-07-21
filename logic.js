@@ -54,9 +54,11 @@ function playerInput() {
             pushToCompList();
             resetPlayer();
             showPattern();
+            console.log(playerList + "player list");
         }
         //this is when the player passes the check
         gameInfo.gameCount+=1;
+        console.log(playerList + "player list");
     } else {
         resetGame();
     }
@@ -70,7 +72,7 @@ function comparePattern() {
 }
 
 function showPattern(){
-
+    console.log(compList + "comp list")
 }
 setInterval(resetGame, 1000);
 function checkState() {
