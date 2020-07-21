@@ -74,7 +74,7 @@ function comparePattern() {
 function showPattern(){
     console.log(compList + "comp list")
 }
-setInterval(resetGame, 1000);
+setInterval(checkState, 1000);
 function checkState() {
     currentTimer-=1;
     if(currentTimer<=0) {
