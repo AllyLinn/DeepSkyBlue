@@ -31,7 +31,6 @@ display computer array(animation controller JS)
 var gameInfo = {
     gameCount: 0, 
     maxTimer: 3000,
-    currentTimer=3000,
 }
 
 let userList = [];
@@ -76,7 +75,6 @@ function comparePattern() {
 function showPattern(){
     console.log(compList + "comp list")
 }
-setInterval(checkState, 1000);
 function checkState() {
     console.log("tests")
     currentTimer-=1;
