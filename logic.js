@@ -46,10 +46,16 @@ let compList = [];
 function setup() {
     gameInfo.startTimer=Date.now();
 }
+$(".button").click(playerInput)
+//document.querySelector(".button").addEventListener('click',playerInput)
+//.addEventListener("click", playerInput, false);
 
-document.getElementsByClassName(".buttion").addEventListener("click",playerInput,false);
+// var test = document.getElementsByClassName(".button");
+// test
 
 function playerInput() {
+    console.log("test")
+    console.log(this);
    var input = this.data-value;
    console.log(input);
 
@@ -81,7 +87,7 @@ function comparePattern() {
 function showPattern(){
     console.log(compList + "comp list")
 }
-setInterval(checkState, 1000);
+//setInterval(checkState, 1000);
 function checkState() {
     console.log("tests")
     currentTimer-=1;
