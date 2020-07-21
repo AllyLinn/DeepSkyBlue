@@ -46,6 +46,10 @@ let compList = [];
 function setup() {
     gameInfo.startTimer=Date.now();
 }
+
+pushToCompList();
+
+
 $(".button").click(playerInput)
 //document.querySelector(".button").addEventListener('click',playerInput)
 //.addEventListener("click", playerInput, false);
@@ -54,31 +58,33 @@ $(".button").click(playerInput)
 // test
 
 function playerInput() {
-    console.log("test")
-    console.log(this);
-   var input = this.data-value;
-   console.log(input);
-
+   var input =parseInt($(this).data("value"));
+   userList[gameInfo.gameCount]=input;
     if (comparePattern() == true) {
-        if(gameCount>=compList.length-1) {
+        console.log(gameInfo.gameCount)
+        if(gameInfo.gameCount==compList.length-1) {
+            console.log("player passed the round")
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
             showPattern();
-            console.log(playerList + "player list");
-            gameInfo.currentTimer = gameInfo.maxTimer();
-        }
+            console.log(userList + "player list");
+            gameInfo.currentTimer = gameInfo.maxTimer;
+        } else {
         //this is when the player passes the check
+        gameInfo.currentTimer = gameInfo.maxTimer;
+        console.log(compList.length - 1);
+        console.log(userList + "player list");
         gameInfo.gameCount+=1;
-        gameInfo.currentTimer = gameInfo.maxTimer();
-        console.log(playerList + "player list");
+        }
     } else {
         resetGame();
     }
 
 }
 function comparePattern() {
-    if(userList[gameInfo.gameCount] === compList[gameInfo.gameCount]) {
+    console.log(gameInfo.gameCount + "game count");
+    if(userList[gameInfo.gameCount] == compList[gameInfo.gameCount]) {
         return true;
     }
     return false;
@@ -97,12 +103,14 @@ function checkState() {
 }
 function resetPlayer() {
     gameInfo.gameCount=0;
+    console.log(gameInfo.gameCount);
     for (let index = 0; index < compList.length; index++) {
         userList[index]=[];
     }
 }
 
 function resetGame(){
+    alert("you lose");
     gameInfo.gameCount = 0;
     gameInfo.currentTimer = gameInfo.maxTimer;
     userList = [];
@@ -111,5 +119,6 @@ function resetGame(){
 }
 
 function pushToCompList(){
-    compList.push(Math.floor(Math.random() * 4) + 1);
+    compList.push(Math.floor(Math.random() * 4));
+    showPattern();
 }
