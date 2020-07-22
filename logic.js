@@ -40,15 +40,19 @@ let userList = [];
 
 let compList = [];
 
-var highscore
+var highscore;
+
+let button;
 
 function setup() {
     gameInfo.startTimer=Date.now();
 }
 
 pushToCompList();
+playback();
 
-$(".individbutton").click(playerInput, buttonAnimation);
+$(".individbutton").click(buttonAnimation);
+$(".individbutton").click(playerInput);
 //document.querySelector(".button").addEventListener('click',playerInput)
 //.addEventListener("click", playerInput, false);
 
@@ -64,6 +68,7 @@ function playerInput() {
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
+            setTimeout(function() {playback()},3000)
             console.log(userList + " player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
         } else {
@@ -98,7 +103,6 @@ function timerState() {
     if(gameInfo.timerPaused==false){
         gameInfo.currentTimer-=1;
         $(".timer").text(gameInfo.currentTimer);
-        console.log(gameInfo.currentTimer)
         if(gameInfo.currentTimer<=0) {
             resetGame();
         }
@@ -135,7 +139,6 @@ function pushToCompList(){
     showPattern();
 }
 
-let button;
 function buttonAnimation(){
             $(this).attr("src", "https://c190stash.imfast.io/" + parseInt($(this).data("value")).toString() + "_2.png");
             button = this
@@ -151,11 +154,24 @@ let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (p
 }
 
 function playback(){
+    console.log("geting called")
     gameInfo.timerPaused=true;
     compList.forEach(element => {
-        buttonAnimation(element);
-        
+        $(".individbutton").each(function() {
+            if (parseInt($(this).data("value")) == element)
+            {
+                $(this).attr("src", "https://c190stash.imfast.io/" + parseInt($(this).data("value")).toString() + "_2.png");
+                button = this
+                setTimeout(function ()
+                {
+                    $(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
+                    //playsound
+                }, 500);
+            }
+        });
+        //add delay here 
     });
+    console.log("done calling")
     gameInfo.timerPaused=false;
 
 }
