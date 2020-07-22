@@ -68,7 +68,7 @@ function playerInput() {
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
-            setTimeout(function() {playback()},3000)
+            setTimeout(function() {playback()},800)
             console.log(userList + " player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
         } else {
@@ -131,7 +131,7 @@ function resetGame(){
     userList = [];
     compList = [];
     pushToCompList();
-
+    showPattern();
 }
 
 function pushToCompList(){
@@ -147,7 +147,15 @@ function buttonAnimation(){
             {$(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
         }, 300);
 }
-
+function buttonAnimationPlay(thisIs) {
+    $(thisIs).attr("src", "https://c190stash.imfast.io/" + parseInt($(thisIs).data("value")).toString() + "_2.png");
+    button = thisIs
+    playSound($(thisIs).data("value"));
+    setTimeout(function ()
+    {
+        $(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
+    }, 300);
+}
 function playSound(e){
 let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (parseFloat(e)+1).toString() + ".mp3");
     soundVar.play();
@@ -156,25 +164,22 @@ let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (p
 function playback(){
     console.log("geting called")
     gameInfo.timerPaused=true;
-    compList.forEach(element => {
-        $(".individbutton").each(function() {
+    let addional = 0;
+    for (const element of compList) {
+        setTimeout( function() {
+        $(".individbutton").each(function ()
+        {
             if (parseInt($(this).data("value")) == element)
             {
-                $(this).attr("src", "https://c190stash.imfast.io/" + parseInt($(this).data("value")).toString() + "_2.png");
-                button = this
-                setTimeout(function ()
-                {
-                    $(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
-                    //playsound
-                }, 500);
+                buttonAnimationPlay(this);
             }
         });
-        //add delay here 
-    });
+    },500 + addional);
+    addional+=500;
+    }
     console.log("done calling")
     gameInfo.timerPaused=false;
-
-}
+};
 
 
 
