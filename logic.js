@@ -100,6 +100,7 @@ function showPattern(){
 setInterval(timerState, 1000);
 
 function timerState() {
+    console.log(gameInfo.timerPaused);
     if(gameInfo.timerPaused==false){
         gameInfo.currentTimer-=1;
         $(".timer").text(gameInfo.currentTimer);
@@ -163,8 +164,10 @@ let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (p
 
 function playback(){
     console.log("geting called")
-    gameInfo.timerPaused=true;
+    console.log(gameInfo.timerPaused);
     let addional = 0;
+    gameInfo.timerPaused = true;
+    setTimeout(function () { gameInfo.timerPaused = false; },500*compList.length)
     for (const element of compList) {
         setTimeout( function() {
         $(".individbutton").each(function ()
@@ -178,7 +181,6 @@ function playback(){
     addional+=500;
     }
     console.log("done calling")
-    gameInfo.timerPaused=false;
 };
 
 
