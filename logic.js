@@ -49,7 +49,7 @@ function setup() {
 pushToCompList();
 
 
-$(".button").click(playerInput)
+$(".individbutton").click(playerInput)
 //document.querySelector(".button").addEventListener('click',playerInput)
 //.addEventListener("click", playerInput, false);
 
