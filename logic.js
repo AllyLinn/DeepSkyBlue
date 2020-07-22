@@ -30,8 +30,8 @@ display computer array(animation controller JS)
 
 var gameInfo = {
     gameCount: 0, 
-    maxTimer: 3000,
-    currentTimer: 3000,
+    maxTimer: 30,
+    currentTimer: 30,
     sound1: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
     sound2: "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
     sound3: "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
@@ -41,6 +41,8 @@ var gameInfo = {
 let userList = [];
 
 let compList = [];
+
+var highscore
 
 function setup() {
     gameInfo.startTimer=Date.now();
@@ -70,11 +72,15 @@ function playerInput() {
             gameInfo.currentTimer = gameInfo.maxTimer;
         } else {
         //this is when the player passes the check but not the round
+        resetTimer();
         gameInfo.currentTimer = gameInfo.maxTimer;
         console.log(userList + " player list");
         gameInfo.gameCount+=1;
         }
     } else {
+        if(compList.length>highscore) {
+         highscore= compList.length;
+        }
         resetGame();
     }
 
@@ -89,14 +95,22 @@ function comparePattern() {
 function showPattern(){
     console.log(compList + " comp list")
 }
-//setInterval(checkState, 1000);
-function checkState() {
-    currentTimer-=1;
-    if(currentTimer<=0) {
+
+setInterval(timerState, 1000);
+function timerState() {
+    
+    gameInfo.currentTimer-=1;
+    $(".timer").text(gameInfo.currentTimer);
+    console.log(gameInfo.currentTimer)
+    if(gameInfo.currentTimer<=0) {
         resetGame();
     }
 }
+function resetTimer() {
+    gameInfo.currentTimer = gameInfo.maxTimer;
+}
 function resetPlayer() {
+    gameInfo.currentTimer = gameInfo.maxTimer;
     gameInfo.gameCount=0;
     for (let index = 0; index < compList.length; index++) {
         userList[index]=[];
@@ -106,7 +120,7 @@ function resetPlayer() {
 function resetGame(){
     alert("you lose");
     gameInfo.gameCount = 0;
-    gameInfo.currentTimer = gameInfo.maxTimer;
+    resetTimer();
     userList = [];
     compList = [];
     pushToCompList();
