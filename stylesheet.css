@@ -9,7 +9,10 @@
 }
 .timer {
     text-align: center;
-    font-size: x-large;
+    font-size: 30pt;
+    color: black;
+    text-shadow: none;
+
 }
 body {
 margin: 100px;
