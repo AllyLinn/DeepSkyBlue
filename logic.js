@@ -27,7 +27,6 @@ display computer array(animation controller JS)
 */
 
 
-
 var gameInfo = {
     gameCount: 0, 
     maxTimer: 30,
@@ -35,7 +34,9 @@ var gameInfo = {
     sound1: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
     sound2: "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
     sound3: "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
-    sound4: "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"
+    sound4: "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
+    timerPaused : false,
+    hasClicked: false
 }
 
 let userList = [];
@@ -50,8 +51,9 @@ function setup() {
 
 pushToCompList();
 
+buttonAnimation(0);
 
-$(".individbutton").click(playerInput)
+$(".individbutton").click(playerInput);
 //document.querySelector(".button").addEventListener('click',playerInput)
 //.addEventListener("click", playerInput, false);
 
@@ -59,12 +61,12 @@ $(".individbutton").click(playerInput)
 // test
 
 function playerInput() {
-   var input =parseInt($(this).data("value"));
-   userList[gameInfo.gameCount]=input;
+   var input = parseInt($(this).data("value"));
+   userList[gameInfo.gameCount] = input;
+   buttonAnimation(0);
     if (comparePattern() == true) {
-        if(gameInfo.gameCount==compList.length-1) {
-            
-            console.log("player passed the round")
+        if(gameInfo.gameCount == compList.length-1) {
+            console.log("player passed the round");
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
@@ -97,18 +99,25 @@ function showPattern(){
 }
 
 setInterval(timerState, 1000);
+
 function timerState() {
-    
-    gameInfo.currentTimer-=1;
-    $(".timer").text(gameInfo.currentTimer);
-    console.log(gameInfo.currentTimer)
-    if(gameInfo.currentTimer<=0) {
-        resetGame();
+    if(gameInfo.timerPaused==false){
+        gameInfo.currentTimer-=1;
+        $(".timer").text(gameInfo.currentTimer);
+        console.log(gameInfo.currentTimer)
+        if(gameInfo.currentTimer<=0) {
+            resetGame();
+        }
+    }else{
+        $(".timer").text("Timer is paused.");
+        resetTimer();
     }
+    
 }
 function resetTimer() {
     gameInfo.currentTimer = gameInfo.maxTimer;
 }
+
 function resetPlayer() {
     gameInfo.currentTimer = gameInfo.maxTimer;
     gameInfo.gameCount=0;
@@ -131,3 +140,26 @@ function pushToCompList(){
     compList.push(Math.floor(Math.random() * 4));
     showPattern();
 }
+
+
+function buttonAnimation(button){
+    $(".button").each(function(){
+        if(parseInt($(this).data("value")) == button){
+            $(".button").attr("src", "https://c190stash.imfast.io/" + button.toString() + "_2.png");
+        }
+    })
+    
+}
+
+function playback(){
+    gameInfo.timerPaused=true;
+    compList.forEach(element => {
+        buttonAnimation(element);
+        //wait x seconds
+    });
+    gameInfo.timerPaused=false;
+
+}
+
+
+
