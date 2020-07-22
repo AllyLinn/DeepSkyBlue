@@ -1,0 +1,21 @@
+.headers {
+    color: white;
+    text-align: center;
+    font-size: xx-large;
+    text-shadow: 2px 2px black;
+}
+.container {
+    text-align: center;
+}
+.timer {
+    text-align: center;
+    font-size: x-large;
+}
+body {
+margin: 100px;
+background-color:#75BDBB;
+}
+.individbutton {
+    padding: 5px 5px;
+    width: 115%;
+}
