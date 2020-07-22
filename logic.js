@@ -51,9 +51,7 @@ function setup() {
 
 pushToCompList();
 
-buttonAnimation(0);
-
-$(".individbutton").click(playerInput);
+$(".individbutton").click(playerInput, buttonAnimation);
 //document.querySelector(".button").addEventListener('click',playerInput)
 //.addEventListener("click", playerInput, false);
 
@@ -63,7 +61,6 @@ $(".individbutton").click(playerInput);
 function playerInput() {
    var input = parseInt($(this).data("value"));
    userList[gameInfo.gameCount] = input;
-   buttonAnimation(0);
     if (comparePattern() == true) {
         if(gameInfo.gameCount == compList.length-1) {
             console.log("player passed the round");
@@ -141,21 +138,23 @@ function pushToCompList(){
     showPattern();
 }
 
-
-function buttonAnimation(button){
-    $(".button").each(function(){
-        if(parseInt($(this).data("value")) == button){
-            $(".button").attr("src", "https://c190stash.imfast.io/" + button.toString() + "_2.png");
-        }
-    })
-    
+let button;
+function buttonAnimation(){
+            $(this).attr("src", "https://c190stash.imfast.io/" + parseInt($(this).data("value")).toString() + "_2.png");
+            button = this
+            setTimeout(function()
+            {$(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
+            //playsound
+        }, 500);
 }
+
+
 
 function playback(){
     gameInfo.timerPaused=true;
     compList.forEach(element => {
         buttonAnimation(element);
-        //wait x seconds
+        
     });
     gameInfo.timerPaused=false;
 
