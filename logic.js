@@ -61,16 +61,17 @@ function playerInput() {
    userList[gameInfo.gameCount]=input;
     if (comparePattern() == true) {
         if(gameInfo.gameCount==compList.length-1) {
+            
             console.log("player passed the round")
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
-            console.log(userList + "player list");
+            console.log(userList + " player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
         } else {
-        //this is when the player passes the check
+        //this is when the player passes the check but not the round
         gameInfo.currentTimer = gameInfo.maxTimer;
-        console.log(userList + "player list");
+        console.log(userList + " player list");
         gameInfo.gameCount+=1;
         }
     } else {
@@ -86,7 +87,7 @@ function comparePattern() {
 }
 
 function showPattern(){
-    console.log(compList + "comp list")
+    console.log(compList + " comp list")
 }
 //setInterval(checkState, 1000);
 function checkState() {
