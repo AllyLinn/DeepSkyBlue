@@ -31,10 +31,7 @@ var gameInfo = {
     gameCount: 0, 
     maxTimer: 30,
     currentTimer: 30,
-    sound1: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
-    sound2: "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
-    sound3: "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
-    sound4: "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
+
     timerPaused : false,
     hasClicked: false
 }
@@ -142,13 +139,16 @@ let button;
 function buttonAnimation(){
             $(this).attr("src", "https://c190stash.imfast.io/" + parseInt($(this).data("value")).toString() + "_2.png");
             button = this
+            playSound($(this).data("value"));
             setTimeout(function()
             {$(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
-            //playsound
-        }, 500);
+        }, 300);
 }
 
-
+function playSound(e){
+let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (parseFloat(e)+1).toString() + ".mp3");
+    soundVar.play();
+}
 
 function playback(){
     gameInfo.timerPaused=true;
