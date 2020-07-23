@@ -27,11 +27,13 @@ display computer array(animation controller JS)
 */
 
 
+
+
 var gameInfo = {
     gameCount: 0, 
     maxTimer: 4,
     currentTimer: 4,
-
+    playerState: true,
     timerPaused : false,
     hasClicked: false
 }
@@ -40,9 +42,11 @@ let userList = [];
 
 let compList = [];
 
-var highscore;
+var highscore = 0;
 
 let button;
+
+updateHS();
 
 function setup() {
     gameInfo.startTimer=Date.now();
@@ -59,8 +63,14 @@ $(".individbutton").click(playerInput);
 // var test = document.getElementsByClassName(".button");
 // test
 
+
+function updateHS(){
+    $(".highscore").text("Highscore: " + highscore)
+}
+
 function playerInput() {
-   var input = parseInt($(this).data("value"));
+   if(gameInfo.playerState == true ){
+         var input = parseInt($(this).data("value"));
    userList[gameInfo.gameCount] = input;
     if (comparePattern() == true) {
         if(gameInfo.gameCount == compList.length-1) {
@@ -71,6 +81,10 @@ function playerInput() {
             setTimeout(function() {playback()},800)
             console.log(userList + " player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
+            if(compList.length > highscore) {
+                highscore = compList.length - 1;
+                updateHS();
+               }
         } else {
         //this is when the player passes the check but not the round
         resetTimer();
@@ -79,14 +93,16 @@ function playerInput() {
         gameInfo.gameCount+=1;
         }
     } else {
-        if(compList.length>highscore) {
-         highscore= compList.length;
+        if(compList.length > highscore) {
+         highscore = compList.length - 1;
+         updateHS();
         }
+        gameInfo.playerState = false;
       setTimeout(() => {
           resetGame()
       }, 1000); 
     }
-
+   }
 }
 function comparePattern() {
     if(userList[gameInfo.gameCount] == compList[gameInfo.gameCount]) {
@@ -110,7 +126,7 @@ function timerState() {
             resetGame();
         }
     }else{
-        $(".timer").text("Timer is paused.");
+        $(".timer").text("Paused");
         resetTimer();
     }
     
@@ -129,6 +145,7 @@ function resetPlayer() {
 
 function resetGame(){
     alert("You lost. Press 'OK' to start a new game.");
+    gameInfo.playerState = true;
     gameInfo.gameCount = 0;
     resetTimer();
     userList = [];
@@ -166,9 +183,10 @@ let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (p
 function playback(){
     console.log("geting called")
     console.log(gameInfo.timerPaused);
-    let addional = 0;
+    let additional = 0;
     gameInfo.timerPaused = true;
-    setTimeout(function () { gameInfo.timerPaused = false; },500*compList.length)
+    gameInfo.playerState = false;
+    setTimeout(function () { gameInfo.timerPaused = false; gameInfo.playerState = true;},500*compList.length)
     for (const element of compList) {
         setTimeout( function() {
         $(".individbutton").each(function ()
@@ -178,8 +196,8 @@ function playback(){
                 buttonAnimationPlay(this);
             }
         });
-    },500 + addional);
-    addional+=500;
+    },500 + additional);
+    additional+=500;
     }
     console.log("done calling")
 };
