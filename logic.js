@@ -27,31 +27,32 @@ display computer array(animation controller JS)
 */
 
 
-
 var gameInfo = {
     gameCount: 0, 
     maxTimer: 30,
     currentTimer: 30,
-    sound1: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
-    sound2: "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
-    sound3: "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
-    sound4: "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"
+
+    timerPaused : false,
+    hasClicked: false
 }
 
 let userList = [];
 
 let compList = [];
 
-var highscore
+var highscore;
+
+let button;
 
 function setup() {
     gameInfo.startTimer=Date.now();
 }
 
 pushToCompList();
+playback();
 
-
-$(".individbutton").click(playerInput)
+$(".individbutton").click(buttonAnimation);
+$(".individbutton").click(playerInput);
 //document.querySelector(".button").addEventListener('click',playerInput)
 //.addEventListener("click", playerInput, false);
 
@@ -59,15 +60,15 @@ $(".individbutton").click(playerInput)
 // test
 
 function playerInput() {
-   var input =parseInt($(this).data("value"));
-   userList[gameInfo.gameCount]=input;
+   var input = parseInt($(this).data("value"));
+   userList[gameInfo.gameCount] = input;
     if (comparePattern() == true) {
-        if(gameInfo.gameCount==compList.length-1) {
-            
-            console.log("player passed the round")
+        if(gameInfo.gameCount == compList.length-1) {
+            console.log("player passed the round");
             //this is for when the player passes a round
             pushToCompList();
             resetPlayer();
+            setTimeout(function() {playback()},800)
             console.log(userList + " player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
         } else {
@@ -97,18 +98,25 @@ function showPattern(){
 }
 
 setInterval(timerState, 1000);
+
 function timerState() {
-    
-    gameInfo.currentTimer-=1;
-    $(".timer").text(gameInfo.currentTimer);
-    console.log(gameInfo.currentTimer)
-    if(gameInfo.currentTimer<=0) {
-        resetGame();
+    console.log(gameInfo.timerPaused);
+    if(gameInfo.timerPaused==false){
+        gameInfo.currentTimer-=1;
+        $(".timer").text(gameInfo.currentTimer);
+        if(gameInfo.currentTimer<=0) {
+            resetGame();
+        }
+    }else{
+        $(".timer").text("Timer is paused.");
+        resetTimer();
     }
+    
 }
 function resetTimer() {
     gameInfo.currentTimer = gameInfo.maxTimer;
 }
+
 function resetPlayer() {
     gameInfo.currentTimer = gameInfo.maxTimer;
     gameInfo.gameCount=0;
@@ -124,10 +132,56 @@ function resetGame(){
     userList = [];
     compList = [];
     pushToCompList();
-
+    showPattern();
 }
 
 function pushToCompList(){
     compList.push(Math.floor(Math.random() * 4));
     showPattern();
 }
+
+function buttonAnimation(){
+            $(this).attr("src", "https://c190stash.imfast.io/" + parseInt($(this).data("value")).toString() + "_2.png");
+            button = this
+            playSound($(this).data("value"));
+            setTimeout(function()
+            {$(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
+        }, 300);
+}
+function buttonAnimationPlay(thisIs) {
+    $(thisIs).attr("src", "https://c190stash.imfast.io/" + parseInt($(thisIs).data("value")).toString() + "_2.png");
+    button = thisIs
+    playSound($(thisIs).data("value"));
+    setTimeout(function ()
+    {
+        $(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
+    }, 300);
+}
+function playSound(e){
+let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (parseFloat(e)+1).toString() + ".mp3");
+    soundVar.play();
+}
+
+function playback(){
+    console.log("geting called")
+    console.log(gameInfo.timerPaused);
+    let addional = 0;
+    gameInfo.timerPaused = true;
+    setTimeout(function () { gameInfo.timerPaused = false; },500*compList.length)
+    for (const element of compList) {
+        setTimeout( function() {
+        $(".individbutton").each(function ()
+        {
+            if (parseInt($(this).data("value")) == element)
+            {
+                buttonAnimationPlay(this);
+            }
+        });
+    },500 + addional);
+    addional+=500;
+    }
+    console.log("done calling")
+};
+
+
+
