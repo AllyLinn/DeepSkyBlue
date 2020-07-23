@@ -53,7 +53,6 @@ setup();
 function setup() {
     $(".gameButtons").css("display", "none")
 }
-
 $(".startbutton").click(function() {
     $(this).attr("src", "https://c190stash.imfast.io/play_2.png");
     setTimeout(() => {
@@ -154,16 +153,11 @@ function resetPlayer() {
 }
 
 function resetGame(){
-    alert("You lost. Press 'OK' to start a new game.");
-    gameInfo.playerState = true;
-    gameInfo.gameCount = 0;
+    returnToStart()
     resetTimer();
     userList = [];
     compList = [];
-    pushToCompList();
-    playback();
 }
-
 function pushToCompList(){
     compList.push(Math.floor(Math.random() * 4));
 }
@@ -214,5 +208,11 @@ function playback(){
     console.log("done calling")
 };
 
-
-
+function returnToStart() {
+    console.log("geting called")
+    $(".gameButtons").css("display", "none");
+    $(".startbutton").css("display", "block");
+    playerState= false;
+    timerPaused = true;
+    gameInfo.gameCount = 0;
+}
