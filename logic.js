@@ -29,8 +29,8 @@ display computer array(animation controller JS)
 
 var gameInfo = {
     gameCount: 0, 
-    maxTimer: 30,
-    currentTimer: 30,
+    maxTimer: 4,
+    currentTimer: 4,
 
     timerPaused : false,
     hasClicked: false
@@ -82,7 +82,9 @@ function playerInput() {
         if(compList.length>highscore) {
          highscore= compList.length;
         }
-        resetGame();
+      setTimeout(() => {
+          resetGame()
+      }, 1000); 
     }
 
 }
@@ -126,18 +128,17 @@ function resetPlayer() {
 }
 
 function resetGame(){
-    alert("you lose");
+    alert("You lost. Press 'OK' to start a new game.");
     gameInfo.gameCount = 0;
     resetTimer();
     userList = [];
     compList = [];
     pushToCompList();
-    showPattern();
+    playback();
 }
 
 function pushToCompList(){
     compList.push(Math.floor(Math.random() * 4));
-    showPattern();
 }
 
 function buttonAnimation(){
