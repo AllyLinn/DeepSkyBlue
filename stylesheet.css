@@ -23,7 +23,11 @@
 
 }
 
-
+.credits {
+    position: bottom, left;
+    position: sticky;
+    margin-top: 8rem;
+}
 
 body {
 margin: 100px;
