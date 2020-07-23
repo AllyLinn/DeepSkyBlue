@@ -27,12 +27,14 @@ display computer array(animation controller JS)
 */
 
 
+
+
 var gameInfo = {
     gameCount: 0, 
-    maxTimer: 30,
-    currentTimer: 30,
-
-    timerPaused : false,
+    maxTimer: 4,
+    currentTimer: 4,
+    playerState: false,
+    timerPaused : true,
     hasClicked: false
 }
 
@@ -40,17 +42,28 @@ let userList = [];
 
 let compList = [];
 
-var highscore;
+var highscore = 0;
 
 let button;
 
+updateHS();
+setup();
+
+
 function setup() {
-    gameInfo.startTimer=Date.now();
+    $(".gameButtons").css("display", "none")
 }
-
-pushToCompList();
-playback();
-
+$(".startbutton").click(function() {
+    $(this).attr("src", "https://c190stash.imfast.io/play_2.png");
+    setTimeout(() => {
+         gameInfo.playerState=true;
+    gameInfo.timerPaused = false;
+     $(".gameButtons").css("display", "block")
+     $(".startbutton").css("display", "none")
+     pushToCompList();
+    playback();
+    }, 500);
+})
 $(".individbutton").click(buttonAnimation);
 $(".individbutton").click(playerInput);
 //document.querySelector(".button").addEventListener('click',playerInput)
@@ -59,8 +72,14 @@ $(".individbutton").click(playerInput);
 // var test = document.getElementsByClassName(".button");
 // test
 
+
+function updateHS(){
+    $(".highscore").text("Highscore: " + highscore)
+}
+
 function playerInput() {
-   var input = parseInt($(this).data("value"));
+   if(gameInfo.playerState == true ){
+         var input = parseInt($(this).data("value"));
    userList[gameInfo.gameCount] = input;
     if (comparePattern() == true) {
         if(gameInfo.gameCount == compList.length-1) {
@@ -71,6 +90,10 @@ function playerInput() {
             setTimeout(function() {playback()},800)
             console.log(userList + " player list");
             gameInfo.currentTimer = gameInfo.maxTimer;
+            if(compList.length > highscore) {
+                highscore = compList.length - 1;
+                updateHS();
+               }
         } else {
         //this is when the player passes the check but not the round
         resetTimer();
@@ -79,12 +102,16 @@ function playerInput() {
         gameInfo.gameCount+=1;
         }
     } else {
-        if(compList.length>highscore) {
-         highscore= compList.length;
+        if(compList.length > highscore) {
+         highscore = compList.length - 1;
+         updateHS();
         }
-        resetGame();
+        gameInfo.playerState = false;
+      setTimeout(() => {
+          resetGame()
+      }, 1000); 
     }
-
+   }
 }
 function comparePattern() {
     if(userList[gameInfo.gameCount] == compList[gameInfo.gameCount]) {
@@ -108,7 +135,7 @@ function timerState() {
             resetGame();
         }
     }else{
-        $(".timer").text("Timer is paused.");
+        $(".timer").text("Paused");
         resetTimer();
     }
     
@@ -126,18 +153,13 @@ function resetPlayer() {
 }
 
 function resetGame(){
-    alert("you lose");
-    gameInfo.gameCount = 0;
+    returnToStart()
     resetTimer();
     userList = [];
     compList = [];
-    pushToCompList();
-    showPattern();
 }
-
 function pushToCompList(){
     compList.push(Math.floor(Math.random() * 4));
-    showPattern();
 }
 
 function buttonAnimation(){
@@ -148,6 +170,7 @@ function buttonAnimation(){
             {$(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
         }, 300);
 }
+
 function buttonAnimationPlay(thisIs) {
     $(thisIs).attr("src", "https://c190stash.imfast.io/" + parseInt($(thisIs).data("value")).toString() + "_2.png");
     button = thisIs
@@ -157,6 +180,7 @@ function buttonAnimationPlay(thisIs) {
         $(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
     }, 300);
 }
+
 function playSound(e){
 let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (parseFloat(e)+1).toString() + ".mp3");
     soundVar.play();
@@ -165,9 +189,10 @@ let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (p
 function playback(){
     console.log("geting called")
     console.log(gameInfo.timerPaused);
-    let addional = 0;
+    let additional = 0;
     gameInfo.timerPaused = true;
-    setTimeout(function () { gameInfo.timerPaused = false; },500*compList.length)
+    gameInfo.playerState = false;
+    setTimeout(function () { gameInfo.timerPaused = false; gameInfo.playerState = true;},500*compList.length)
     for (const element of compList) {
         setTimeout( function() {
         $(".individbutton").each(function ()
@@ -177,11 +202,17 @@ function playback(){
                 buttonAnimationPlay(this);
             }
         });
-    },500 + addional);
-    addional+=500;
+    },500 + additional);
+    additional+=500;
     }
     console.log("done calling")
 };
 
-
-
+function returnToStart() {
+    console.log("geting called")
+    $(".gameButtons").css("display", "none");
+    $(".startbutton").css("display", "block");
+    playerState= false;
+    timerPaused = true;
+    gameInfo.gameCount = 0;
+}
