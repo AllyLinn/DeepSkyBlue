@@ -12,17 +12,26 @@
     font-size: 30pt;
     color: black;
     text-shadow: none;
+}
+.startbutton {
+    margin-left: auto;
+    margin-right: auto;
 
 }
+.gameButtons {
+    align-content: center;
+
+}
+
+
+
 body {
 margin: 100px;
 background-color:#75BDBB;
 }
 .individbutton {
-    padding: 5px 5px;
+    /* padding: 5px 5px; */
     width: 115%;
+    margin: 1rem;
 }
-.gameButtons {
-    padding: 5px 5px;
-    width: 115%;
-}
+

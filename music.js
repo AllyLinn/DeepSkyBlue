@@ -1,8 +1,8 @@
 var myAudio = document.getElementById("myAudio");
 
-$("#logo").click (startMusic);
+$(".startbutton").click(startMusic);
 
-myAudio.volume = 0.1;
+myAudio.volume = 0.05;
 
 function startMusic() {
     document.getElementById ("myAudio").play();
