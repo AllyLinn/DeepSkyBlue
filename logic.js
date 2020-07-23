@@ -33,8 +33,8 @@ var gameInfo = {
     gameCount: 0, 
     maxTimer: 4,
     currentTimer: 4,
-    playerState: true,
-    timerPaused : false,
+    playerState: false,
+    timerPaused : true,
     hasClicked: false
 }
 
@@ -47,14 +47,24 @@ var highscore = 0;
 let button;
 
 updateHS();
+setup();
+
 
 function setup() {
-    gameInfo.startTimer=Date.now();
+    $(".gameButtons").css("display", "none")
 }
 
-pushToCompList();
-playback();
-
+$(".startbutton").click(function() {
+    $(this).attr("src", "https://c190stash.imfast.io/play_2.png");
+    setTimeout(() => {
+         gameInfo.playerState=true;
+    gameInfo.timerPaused = false;
+     $(".gameButtons").css("display", "block")
+     $(".startbutton").css("display", "none")
+     pushToCompList();
+    playback();
+    }, 500);
+})
 $(".individbutton").click(buttonAnimation);
 $(".individbutton").click(playerInput);
 //document.querySelector(".button").addEventListener('click',playerInput)
@@ -166,6 +176,7 @@ function buttonAnimation(){
             {$(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
         }, 300);
 }
+
 function buttonAnimationPlay(thisIs) {
     $(thisIs).attr("src", "https://c190stash.imfast.io/" + parseInt($(thisIs).data("value")).toString() + "_2.png");
     button = thisIs
@@ -175,6 +186,7 @@ function buttonAnimationPlay(thisIs) {
         $(button).attr("src", "https://c190stash.imfast.io/" + parseInt($(button).data("value")).toString() + "_1.png");
     }, 300);
 }
+
 function playSound(e){
 let soundVar = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound" + (parseFloat(e)+1).toString() + ".mp3");
     soundVar.play();
